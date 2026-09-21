@@ -29,3 +29,50 @@ export type LoreEntry = {
   priority: number;
   position: "before_char" | "after_char";
 };
+
+/** View models shared by server readers and client components (no runtime deps). */
+
+export type CharacterSummary = {
+  id: string;
+  slug: string;
+  name: string;
+  creator: string;
+  tagline: string;
+  description: string;
+  tags: string[];
+  imageUrl: string;
+  gradient: string;
+  chatCount: number;
+  likeCount: number;
+  featured: boolean;
+  loreCount: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type LoreEntrySummary = {
+  id: string;
+  name: string | null;
+  keys: string[];
+  content: string;
+  constant: boolean;
+};
+
+export type CharacterDetail = CharacterSummary & {
+  personality: string;
+  scenario: string;
+  firstMessage: string;
+  systemPrompt: string;
+  lore: LoreEntrySummary[];
+};
+
+export type WorldBookEntry = {
+  id: string;
+  name: string | null;
+  keys: string[];
+  content: string;
+  constant: boolean;
+  characterName: string;
+  characterSlug: string;
+  characterCreator: string;
+};
