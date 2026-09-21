@@ -26,14 +26,16 @@ IMAGE = "ghcr.io/waylake/inferaft-character"
 RELEASE_RE = r"^[0-9a-f]{7}-\d{8}$"
 
 
-def run(*args, capture=False):
+def run(*args, capture=False, env=None):
     return subprocess.run(args, cwd=ROOT, check=True, text=True,
-                          stdout=subprocess.PIPE if capture else None).stdout
+                          stdout=subprocess.PIPE if capture else None, env=env).stdout
 
 
-def compose(*args, capture=False):
+def compose(release, *args, capture=False):
+    # RELEASE_ID/WEB_PORT/IMAGE_BASE are what compose.app.yaml interpolates.
+    env = {**os.environ, "RELEASE_ID": release, "WEB_PORT": str(PORT), "IMAGE_BASE": IMAGE}
     return run("docker", "compose", "--env-file", ".env.production", "-p", PROJECT,
-               "-f", "compose.app.yaml", *args, capture=capture)
+               "-f", "compose.app.yaml", *args, capture=capture, env=env)
 
 
 def load_state():
@@ -75,13 +77,14 @@ def container_logs(tail=40):
 
 def migrate(release):
     # Additive migrations run before the switch; the old release keeps serving.
-    compose("run", "--rm", "--no-deps", "-T", "--entrypoint", "node", "web", "scripts/migrate.mjs")
+    compose(release, "run", "--rm", "--no-deps", "-T", "--entrypoint", "node", "web",
+            "scripts/migrate.mjs")
     print(f"[deploy] migrations applied for {release}")
 
 
 def up(release, attempt_label="primary"):
     run("docker", "tag", f"{IMAGE}:{release}", f"{IMAGE}:current")
-    compose("up", "-d", "--wait", "--wait-timeout", "120", "web")
+    compose(release, "up", "-d", "--wait", "--wait-timeout", "120", "web")
     if healthy():
         save_state(release)
         print(f"[deploy] {release} healthy on 127.0.0.1:{PORT} ({attempt_label})")
