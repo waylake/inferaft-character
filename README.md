@@ -14,6 +14,7 @@ A separate consumer character-chat web app that uses **Inferaft** as its model b
 
 ## Stack
 
+- Bun 1.3 (install + runner; `next dev`/`next build` still run on Node)
 - Next.js 16.3.5 / React 19.2.8 / TypeScript 5.9
 - Tailwind CSS 4
 - Better Auth 1.7.4 + PostgreSQL 17
@@ -28,11 +29,11 @@ This deliberately mirrors the modern parts of `waylake/inferaft` while keeping t
 ```bash
 cp .env.example .env.local
 docker compose up -d
-npm install
-npx auth@latest migrate --yes
-npm run db:migrate
-npm run db:seed
-npm run dev
+bun install
+bunx auth@latest migrate --yes
+bun run db:migrate
+bun run db:seed
+bun run dev
 ```
 
 Open http://localhost:3000, sign up, select a character, and chat.

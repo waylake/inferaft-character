@@ -2,6 +2,7 @@
   "name": "inferaft-character-poc",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "bun@1.3.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,7 +12,7 @@
     "db:seed": "node scripts/seed.mjs"
   },
   "dependencies": {
-    "@ai-sdk/openai": "4.0.71",
+    "@ai-sdk/openai": "^3.0.114",
     "@getzep/zep-cloud": "^3.23.0",
     "@getzep/zep-vercel-ai": "0.2.0",
     "ai": "^6.0.0",
