@@ -6,4 +6,9 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   globalIgnores([".next/**"]),
+  {
+    // vendored output of the shadcn CLI — kept byte-identical so `shadcn add` stays clean
+    files: ["components/ui/**/*.{ts,tsx}", "hooks/**/*.{ts,tsx}"],
+    rules: { "react-hooks/set-state-in-effect": "off" },
+  },
 ]);
