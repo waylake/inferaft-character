@@ -1,0 +1,37 @@
+{
+  "name": "inferaft-character-poc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check": "next typegen && tsc --noEmit && eslint .",
+    "db:migrate": "node scripts/migrate.mjs",
+    "db:seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "4.0.71",
+    "@getzep/zep-cloud": "^3.23.0",
+    "@getzep/zep-vercel-ai": "0.2.0",
+    "ai": "^6.0.0",
+    "better-auth": "1.7.4",
+    "lucide-react": "^0.545.0",
+    "next": "16.3.5",
+    "pg": "^8.16.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^24.3.0",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "eslint": "^9.35.0",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2"
+  }
+}
