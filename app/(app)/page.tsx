@@ -39,7 +39,7 @@ export default async function HomePage({
   const tagShelf = topTag ? catalog.filter((c) => c.tags.includes(topTag)).slice(0, 8) : [];
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-8 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="px-gutter py-section mx-auto w-full max-w-7xl space-y-10">
       <HeroCarousel characters={featured} />
 
       <Tabs defaultValue="characters" className="gap-6">

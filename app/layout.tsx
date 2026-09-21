@@ -1,11 +1,7 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
 
 export const metadata: Metadata = {
   title: { default: "Storydeck — 캐릭터와 대화하기", template: "%s · Storydeck" },
@@ -17,8 +13,8 @@ export const viewport: Viewport = { themeColor: "#0a0a0a" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={cn("dark font-sans", geist.variable)}>
-      <body className="min-h-dvh antialiased">
+    <html lang="ko" className="dark">
+      <body className="min-h-dvh">
         <TooltipProvider>{children}</TooltipProvider>
         <Toaster position="top-center" />
       </body>

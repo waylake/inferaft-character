@@ -47,9 +47,9 @@ async function ChatScreen({ params }: { params: Promise<{ slug: string }> }) {
           <Image src={character.imageUrl} alt={character.name} fill sizes="18rem" className="object-cover" />
         </div>
         <div className="space-y-1">
-          <h1 className="font-heading text-lg font-semibold">{character.name}</h1>
-          <p className="text-xs text-muted-foreground">@{character.creator}</p>
-          <p className="pt-1 text-sm leading-6 text-muted-foreground">{character.tagline}</p>
+          <h1 className="text-lg font-medium tracking-tight">{character.name}</h1>
+          <p className="text-muted-foreground font-mono text-xs">@{character.creator}</p>
+          <p className="text-muted-foreground pt-1 text-sm leading-6">{character.tagline}</p>
         </div>
         <div className="flex flex-wrap gap-1.5">
           {character.tags.map((tag) => (

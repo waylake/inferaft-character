@@ -13,15 +13,15 @@ export function SectionHeader({
   linkLabel?: string;
 }) {
   return (
-    <div className="mb-4 flex items-end justify-between gap-4">
+    <div className="mb-5 flex items-end justify-between gap-4">
       <div className="min-w-0">
-        <h2 className="font-heading text-base font-semibold tracking-tight sm:text-lg">{title}</h2>
-        {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
+        <h2 className="text-heading font-medium tracking-tight">{title}</h2>
+        {description && <p className="text-muted-foreground mt-1.5 text-sm text-pretty">{description}</p>}
       </div>
       {href && (
         <Link
           href={href}
-          className="flex shrink-0 items-center gap-1 rounded-md px-1 py-1 text-xs text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none"
+          className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 flex shrink-0 items-center gap-1 rounded-md px-1 py-1 text-xs transition-colors focus-visible:ring-3 focus-visible:outline-none"
         >
           {linkLabel} <ArrowRight className="size-3.5" />
         </Link>

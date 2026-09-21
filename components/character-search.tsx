@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 import {
+  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
@@ -60,25 +61,28 @@ export function CharacterSearch() {
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen} title="캐릭터 검색" description="이름, 태그, 창작자로 찾기">
-        <CommandInput placeholder="캐릭터, 태그, 창작자 검색…" />
-        <CommandList>
-          <CommandEmpty>{items ? "결과가 없습니다." : "불러오는 중…"}</CommandEmpty>
-          <CommandGroup heading="캐릭터">
-            {(items ?? []).map((item) => (
-              <CommandItem
-                key={item.slug}
-                value={`${item.name} ${item.creator} ${item.tags.join(" ")}`}
-                onSelect={() => {
-                  setOpen(false);
-                  router.push(`/characters?q=${encodeURIComponent(item.name)}`);
-                }}
-              >
-                <span className="truncate font-medium">{item.name}</span>
-                <span className="truncate text-xs text-muted-foreground">@{item.creator}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </CommandList>
+        {/* CommandDialog only renders the dialog shell — the Command root is ours to provide. */}
+        <Command>
+          <CommandInput placeholder="캐릭터, 태그, 창작자 검색…" />
+          <CommandList>
+            <CommandEmpty>{items ? "결과가 없습니다." : "불러오는 중…"}</CommandEmpty>
+            <CommandGroup heading="캐릭터">
+              {(items ?? []).map((item) => (
+                <CommandItem
+                  key={item.slug}
+                  value={`${item.name} ${item.creator} ${item.tags.join(" ")}`}
+                  onSelect={() => {
+                    setOpen(false);
+                    router.push(`/characters?q=${encodeURIComponent(item.name)}`);
+                  }}
+                >
+                  <span className="truncate font-medium">{item.name}</span>
+                  <span className="text-muted-foreground truncate text-xs">@{item.creator}</span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
       </CommandDialog>
     </>
   );

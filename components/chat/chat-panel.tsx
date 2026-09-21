@@ -156,7 +156,7 @@ export function ChatPanel({
               className="max-h-40 min-h-11 py-3"
             />
             <InputGroupAddon align="block-end">
-              <p className="text-[11px] text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Enter 전송 · Shift+Enter 줄바꿈 · 등장인물은 사용자를 대신해 말하지 않습니다
               </p>
               <InputGroupButton
@@ -173,7 +173,7 @@ export function ChatPanel({
           </InputGroup>
         </form>
         <div className="mx-auto mt-2 flex w-full max-w-3xl items-center justify-between">
-          <p className="text-[11px] text-muted-foreground">Inferaft 추론 · 가상의 대화입니다</p>
+          <p className="text-xs text-muted-foreground">Inferaft 추론 · 가상의 대화입니다</p>
           <Button variant="ghost" size="xs" asChild>
             <Link href="/characters">다른 캐릭터</Link>
           </Button>

@@ -34,7 +34,7 @@ export function CharacterCard({
           </Badge>
         )}
         <div className="absolute inset-x-0 bottom-0 space-y-1 p-3">
-          <div className="flex items-center gap-3 text-[11px] text-white/70">
+          <div className="flex items-center gap-3 text-xs text-white/70">
             <span className="flex items-center gap-1">
               <Heart className="size-3" /> {formatCount(character.likeCount)}
             </span>
@@ -43,7 +43,7 @@ export function CharacterCard({
             </span>
           </div>
           <h3 className="truncate font-heading text-sm font-semibold text-white">{character.name}</h3>
-          <p className="truncate text-[11px] text-white/60">@{character.creator}</p>
+          <p className="truncate text-xs text-white/60">@{character.creator}</p>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export function CharacterCard({
         <p className="line-clamp-2 text-xs leading-5 text-muted-foreground">{character.tagline}</p>
         <div className="flex flex-wrap gap-1">
           {character.tags.slice(0, 3).map((tag) => (
-            <Badge key={tag} variant="outline" className="text-[10px] font-normal text-muted-foreground">
+            <Badge key={tag} variant="outline" className="text-xs font-normal text-muted-foreground">
               {tag}
             </Badge>
           ))}

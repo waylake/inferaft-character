@@ -18,8 +18,8 @@ export default async function LoginPage({
   return (
     <div className="space-y-6">
       <div className="space-y-1 text-center">
-        <h1 className="font-heading text-xl font-semibold">로그인</h1>
-        <p className="text-sm text-muted-foreground">이어서 대화하려면 계정이 필요합니다.</p>
+        <h1 className="text-heading font-medium tracking-tight">로그인</h1>
+        <p className="text-muted-foreground text-sm">이어서 대화하려면 계정이 필요합니다.</p>
       </div>
       <AuthForm mode="login" next={next} />
     </div>

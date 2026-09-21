@@ -56,10 +56,10 @@ export default async function ExplorePage({
   const allTags = [...new Set(catalog.flatMap((c) => c.tags))].slice(0, 10);
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
-      <div className="space-y-2">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">탐색</h1>
-        <p className="text-sm text-muted-foreground">
+    <main className="px-gutter py-section mx-auto w-full max-w-7xl space-y-8">
+      <div className="space-y-3">
+        <h1 className="text-title font-medium tracking-tight text-balance">탐색</h1>
+        <p className="text-muted-foreground text-sm text-pretty">
           {catalog.length}명의 캐릭터 · 태그와 대화 스타일로 찾아보세요.
         </p>
       </div>

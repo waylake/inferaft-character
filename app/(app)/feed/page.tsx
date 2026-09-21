@@ -12,7 +12,7 @@ export default async function FeedPage() {
   const feed = await getActivityFeed();
 
   return (
-    <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+    <main className="px-gutter py-section mx-auto w-full max-w-7xl space-y-8">
       <SectionHeader
         title="피드"
         description="최근 2주 안에 실제 대화가 오간 캐릭터와 새로 공개된 캐릭터입니다."

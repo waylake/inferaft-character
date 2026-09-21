@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -52,28 +51,41 @@ export function CharacterDetailDialog({
 
   return (
     <Dialog open onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto p-0 sm:max-w-3xl">
-        <div className="grid min-w-0 sm:grid-cols-[12rem_minmax(0,1fr)]">
-          <div className="relative aspect-2/3 w-full overflow-hidden bg-muted sm:aspect-auto sm:h-full sm:min-h-full">
-            <Image
-              src={character.imageUrl}
-              alt={character.name}
-              fill
-              sizes="(max-width: 640px) 100vw, 12rem"
-              className="object-cover"
-            />
+      <DialogContent className="max-h-[92dvh] gap-0 overflow-y-auto p-0 sm:max-w-4xl">
+        <div className="flex min-w-0 flex-col sm:flex-row">
+          <div className="bg-sidebar flex shrink-0 flex-col gap-4 p-4 sm:w-64">
+            <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-muted sm:aspect-2/3">
+              <Image
+                src={character.imageUrl}
+                alt={character.name}
+                fill
+                sizes="(max-width: 640px) 100vw, 16rem"
+                className="object-cover"
+              />
+            </div>
+            <form action={startConversation} className="mt-auto">
+              <input type="hidden" name="slug" value={character.slug} />
+              <Button type="submit" className="w-full">
+                새 대화 시작
+              </Button>
+            </form>
+            <p className="text-muted-foreground text-xs leading-4">
+              공개 {formatDate(character.createdAt)}
+              <br />
+              수정 {formatDate(character.updatedAt)}
+            </p>
           </div>
 
           <div className="min-w-0 space-y-5 p-5 sm:p-6">
             <DialogHeader className="gap-2 text-left">
-              <DialogTitle className="font-heading text-xl">{character.name}</DialogTitle>
+              <DialogTitle className="text-heading font-medium tracking-tight">{character.name}</DialogTitle>
               <DialogDescription className="text-pretty">
                 {character.tagline}
               </DialogDescription>
               <p className="text-xs text-muted-foreground">@{character.creator}</p>
             </DialogHeader>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+            <div className="text-muted-foreground flex flex-wrap items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5">
                 <Heart className="size-3.5" /> {formatCount(character.likeCount)}
               </span>
@@ -94,12 +106,11 @@ export function CharacterDetailDialog({
             </div>
 
             <p className="text-sm leading-6 text-muted-foreground">{character.description}</p>
-
             <Separator />
 
             <section className="space-y-3">
-              <h3 className="flex items-center gap-2 font-heading text-sm font-semibold">
-                <Sparkles className="size-4 text-primary" /> 첫 장면
+              <h3 className="flex items-center gap-2 font-heading text-sm font-medium">
+                <Sparkles className="text-primary size-4" /> 첫 장면
               </h3>
               {detail ? (
                 <p className="text-sm leading-6 text-muted-foreground">{detail.scenario}</p>
@@ -109,8 +120,8 @@ export function CharacterDetailDialog({
             </section>
 
             <section className="space-y-3">
-              <h3 className="flex items-center gap-2 font-heading text-sm font-semibold">
-                <BookMarked className="size-4 text-primary" /> 세계관 정보
+              <h3 className="flex items-center gap-2 font-heading text-sm font-medium">
+                <BookMarked className="text-primary size-4" /> 세계관 정보
               </h3>
               {detail ? (
                 <ItemGroup className="gap-2">
@@ -120,7 +131,7 @@ export function CharacterDetailDialog({
                         <ItemTitle className="text-xs">
                           {entry.name ?? "로어"}
                           {entry.constant && (
-                            <Badge variant="outline" className="ml-1.5 text-[10px] font-normal">
+                            <Badge variant="outline" className="ml-1.5 text-xs font-normal">
                               항상 적용
                             </Badge>
                           )}
@@ -140,18 +151,6 @@ export function CharacterDetailDialog({
               )}
             </section>
 
-            <p className="text-[11px] text-muted-foreground">
-              공개 {formatDate(character.createdAt)} · 수정 {formatDate(character.updatedAt)}
-            </p>
-
-            <DialogFooter className="gap-2 sm:justify-start">
-              <form action={startConversation}>
-                <input type="hidden" name="slug" value={character.slug} />
-                <Button type="submit" className="w-full sm:w-auto">
-                  새 대화 시작
-                </Button>
-              </form>
-            </DialogFooter>
           </div>
         </div>
       </DialogContent>

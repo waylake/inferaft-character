@@ -19,7 +19,7 @@ const shellData = cache(async () => {
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider className="h-dvh overflow-hidden">
-      <Suspense fallback={<Sidebar collapsible="icon" variant="inset" />}>
+      <Suspense fallback={<Sidebar collapsible="icon" className="border-0" />}>
         <SidebarSlot />
       </Suspense>
       <SidebarInset className="min-w-0 overflow-hidden">
