@@ -1,4 +1,5 @@
 import { Activity } from "lucide-react";
+import { connection } from "next/server";
 import { getActivityFeed } from "@/lib/characters";
 import { CharacterCollection } from "@/components/character-collection";
 import { SectionHeader } from "@/components/section-header";
@@ -8,7 +9,11 @@ import { Badge } from "@/components/ui/badge";
 
 export const metadata = { title: "피드" };
 
+// Same reason as the home page: `use cache` at runtime keeps the image database-free.
+export const instant = false;
+
 export default async function FeedPage() {
+  await connection();
   const feed = await getActivityFeed();
 
   return (

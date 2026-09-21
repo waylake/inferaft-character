@@ -49,6 +49,31 @@ INFERAFT_MOCK=false
 
 For long-term temporal memory, set `ZEP_API_KEY`. The app still works without it; PostgreSQL summaries/notes remain the deterministic narrative memory layer while Zep supplies semantic cross-turn recall.
 
+## Deploy
+
+Same release model as the Inferaft core: CI builds an immutable image, a
+separate workflow switches the running release, and the database is never part
+of an application release.
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `check` | push / PR | `bun install --frozen-lockfile`, `check`, `build` (no database needed) |
+| `release` | push to `main` | builds + pushes `ghcr.io/waylake/inferaft-character:<sha7>-<yyyymmdd>`, ships deploy files to dev1 |
+| `deploy` | manual | `python3 scripts/deploy.py <release>` on dev1: pull → migrate → restart behind the health gate → roll back on failure |
+
+Host side (`doyeon@dev1.waylake.com:~/apps/inferaft-character`):
+
+```bash
+docker compose --env-file .env.production -f compose.db.yaml up -d   # once
+cp .env.production.example .env.production                           # then fill it in
+sudo scripts/provision-site.sh                                       # nginx (http)
+sudo scripts/provision-site.sh --tls                                 # + cert, once DNS resolves
+```
+
+The image is environment-independent: the catalog is read through `use cache` at
+runtime, so nothing is baked in at build time and no database is reachable during
+`docker build`.
+
 ## Memory architecture
 
 Do **not** collapse every kind of memory into one vector search. Character roleplay has different memory classes with different failure modes:

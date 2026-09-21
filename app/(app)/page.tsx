@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { connection } from "next/server";
 import { BookMarked, Flame, Sparkles } from "lucide-react";
 import { getCatalog, getFeatured, getWorldBook } from "@/lib/characters";
 import { HeroCarousel } from "@/components/hero-carousel";
@@ -19,6 +20,10 @@ const SORTS = [
   { value: "name", label: "이름순" },
 ];
 
+// Rendered per request. The data still comes from the runtime `use cache` layer, but
+// prerendering it would make the production image need a reachable database at build time.
+export const instant = false;
+
 /**
  * Static shell (cached catalog) + one streamed region for the chip-driven grid.
  * `searchParams` is runtime data, so only the part that reads it sits in Suspense.
@@ -28,6 +33,7 @@ export default async function HomePage({
 }: {
   searchParams: Promise<{ sort?: string }>;
 }) {
+  await connection();
   const [catalog, featured, world] = await Promise.all([getCatalog(), getFeatured(), getWorldBook()]);
 
   const recommended = [...catalog]

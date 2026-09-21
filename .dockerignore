@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.github
+.env
+.env.local
+.env.production
+.env*.bak*
+*.log
+*.tsbuildinfo
+.hallmark
+docs
+artifacts
+design.md
+README.md
+Dockerfile
+compose*.yaml

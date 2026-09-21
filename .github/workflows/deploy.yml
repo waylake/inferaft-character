@@ -1,0 +1,40 @@
+# The production switch. Builds nothing: it deploys an existing release
+# (default: the latest main head + today, built by the Release workflow).
+name: Deploy
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release id (<sha7>-<yyyymmdd>). Empty = latest main + today.'
+        required: false
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - name: Resolve release
+        id: rel
+        run: |
+          if [ -n "${{ inputs.release }}" ]; then
+            echo "release=${{ inputs.release }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "release=$(git rev-parse --short=7 HEAD)-$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Switch the release on dev1
+        env:
+          KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.DEPLOY_SSH_KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519
+          ssh doyeon@dev1.waylake.com "cd apps/inferaft-character && python3 scripts/deploy.py '${{ steps.rel.outputs.release }}'"
